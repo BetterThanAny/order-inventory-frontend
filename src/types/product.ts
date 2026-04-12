@@ -19,6 +19,7 @@ export interface ProductCreate {
   name: string
   description?: string
   price_cents: number
+  initial_stock?: number
 }
 
 export interface ProductUpdate {

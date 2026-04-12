@@ -34,6 +34,7 @@ const form = ref({
   name: '',
   description: '',
   priceYuan: 0,
+  initialStock: 0,
   is_active: true,
 })
 
@@ -56,7 +57,7 @@ watch(
           is_active: props.product.is_active,
         }
       } else {
-        form.value = { sku: '', name: '', description: '', priceYuan: 0, is_active: true }
+        form.value = { sku: '', name: '', description: '', priceYuan: 0, initialStock: 0, is_active: true }
       }
       formRef.value?.clearValidate()
     }
@@ -85,6 +86,7 @@ async function onSubmit() {
         name: form.value.name,
         description: form.value.description || undefined,
         price_cents: priceCents,
+        initial_stock: form.value.initialStock,
       })
       ElMessage.success('创建成功')
     }
@@ -111,7 +113,10 @@ async function onSubmit() {
         <el-input v-model="form.description" type="textarea" :rows="3" />
       </el-form-item>
       <el-form-item label="价格" prop="priceYuan">
-        <el-input-number v-model="form.priceYuan" :precision="2" :min="0" :step="1" />
+        <el-input-number v-model="form.priceYuan" :precision="2" :min="0" :max="21000000" :step="1" />
+      </el-form-item>
+      <el-form-item v-if="!isEdit" label="初始库存">
+        <el-input-number v-model="form.initialStock" :min="0" :step="10" />
       </el-form-item>
       <el-form-item v-if="isEdit" label="状态">
         <el-switch
