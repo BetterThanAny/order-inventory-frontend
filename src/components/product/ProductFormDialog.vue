@@ -54,6 +54,7 @@ watch(
           name: props.product.name,
           description: props.product.description ?? '',
           priceYuan: props.product.price_cents / 100,
+          initialStock: 0,
           is_active: props.product.is_active,
         }
       } else {

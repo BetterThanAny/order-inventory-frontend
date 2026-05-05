@@ -4,7 +4,7 @@ import { ElMessage } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import ProductSelect from '@/components/product/ProductSelect.vue'
 import { useOrderStore } from '@/stores/order'
-import { listProducts } from '@/api/products'
+import { getProduct } from '@/api/products'
 import type { Product } from '@/types/product'
 import { formatPrice } from '@/composables/usePrice'
 
@@ -31,10 +31,8 @@ const productCache = ref<Map<number, Product>>(new Map())
 async function loadProductInfo(id: number) {
   if (!productCache.value.has(id)) {
     try {
-      const res = await listProducts({ page: 1, page_size: 50 })
-      for (const p of res.items) {
-        productCache.value.set(p.id, p)
-      }
+      const product = await getProduct(id)
+      productCache.value.set(product.id, product)
     } catch {
       // 静默失败
     }

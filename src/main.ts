@@ -11,9 +11,9 @@ import './assets/styles/global.scss'
 const app = createApp(App)
 const pinia = createPinia()
 app.use(pinia)
-app.use(router)
 
 const authStore = useAuthStore()
 authStore.initFromStorage()
 
+app.use(router)
 app.mount('#app')
